@@ -11,10 +11,24 @@
   <link rel="icon" type="image/png" sizes="32x32" href="icones/favicon-32.png">
   <link rel="apple-touch-icon" href="icones/apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="style.css?v=icone-f-1">
+  <link rel="stylesheet" href="style.css?v=face-id-1">
 </head>
 <body>
   <main class="phone-app is-splashing" data-screen="home">
+    <div class="lock-screen" id="lockScreen" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+      <div class="lock-content">
+        <svg class="brand-symbol lock-symbol" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="30"></circle>
+          <path class="f-haste" d="M17.3 46.6L21.2 21.6C27.9 17.7 40.9 15.4 48.9 19.5"></path>
+          <path class="f-meio" d="M20.4 33.5C27.9 30.1 38.9 28.4 44.8 30.9"></path>
+          <path class="f-baixo" d="M27.6 40.9C31.1 38.8 37.3 38.2 40.9 40.6"></path>
+        </svg>
+        <h1 id="lockTitle">SpotiF&ecirc;</h1>
+        <p class="lock-message" data-lock-message aria-live="polite">Use o Face ID para entrar.</p>
+        <button class="lock-button" type="button" data-lock-unlock>Entrar com Face ID</button>
+        <button class="lock-link" type="button" data-lock-create>Primeiro acesso neste celular</button>
+      </div>
+    </div>
     <div class="splash-screen" id="splashScreen" role="status" aria-live="polite">
       <div class="splash-content">
         <div class="wordmark splash-wordmark" aria-label="SpotiF&ecirc;">
@@ -293,6 +307,7 @@
     <audio id="audioPlayer" preload="metadata" src="musicas/musica1.mp3"></audio>
   </main>
 
+  <script src="bloqueio.js?v=face-id-1"></script>
   <script src="script.js?v=spotife2-1"></script>
 </body>
 </html>

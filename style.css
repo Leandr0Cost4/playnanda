@@ -1435,3 +1435,89 @@ input[type="range"]::-webkit-slider-thumb {
 .brand-symbol .f-baixo {
   stroke-width: 4.2;
 }
+
+/* Tela de desbloqueio com Face ID */
+.lock-screen {
+  position: fixed;
+  inset: 0 auto 0 50%;
+  z-index: 90;
+  width: min(100vw, 430px);
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  padding: calc(24px + var(--safe-top)) 26px calc(24px + var(--safe-bottom));
+  background: #000;
+  opacity: 1;
+  transition: opacity .3s ease;
+}
+
+.lock-screen[hidden] {
+  display: none;
+}
+
+.lock-screen.is-unlocking {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lock-content {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  width: min(100%, 320px);
+  text-align: center;
+}
+
+.lock-symbol {
+  width: 84px;
+  height: 84px;
+  flex-basis: 84px;
+  color: var(--spotify-green);
+  margin-bottom: 4px;
+}
+
+.lock-content h1 {
+  margin: 0;
+  color: var(--spotify-green);
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.lock-message {
+  min-height: 40px;
+  margin: 0 0 6px;
+  color: rgba(255,255,255,.78);
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.lock-button {
+  width: 100%;
+  min-height: 52px;
+  border-radius: 999px;
+  background: var(--spotify-green);
+  color: #05240f;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.lock-button:disabled {
+  opacity: .6;
+}
+
+.lock-link {
+  margin-top: 4px;
+  color: rgba(255,255,255,.7);
+  font-size: 14.5px;
+  text-decoration: underline;
+}
+
+@media (min-width: 760px) {
+  .lock-screen {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    transform: none;
+  }
+}
