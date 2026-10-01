@@ -1421,3 +1421,17 @@ input[type="range"]::-webkit-slider-thumb {
 .player-media-wrap.is-photo .fallback-media {
   object-fit: contain;
 }
+
+/* Simbolo do SpotiFe: o F com tres listras */
+.brand-symbol .f-haste {
+  stroke-width: 7.1;
+  stroke-linejoin: round;
+}
+
+.brand-symbol .f-meio {
+  stroke-width: 5.8;
+}
+
+.brand-symbol .f-baixo {
+  stroke-width: 4.2;
+}
