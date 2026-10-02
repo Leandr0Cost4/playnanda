@@ -253,6 +253,15 @@ const playlists = {
 
 let currentPlaylistKey = "playlist";
 let currentTrackIndex = 0;
+let trackStartCounted = false;
+
+function registerStat(event, track) {
+  if (!window.spotifeEstatistica) {
+    return;
+  }
+
+  window.spotifeEstatistica(track ? `${event}_${track.title}` : event, track ? { musica: track.title } : undefined);
+}
 
 function currentPlaylist() {
   return playlists[currentPlaylistKey];
@@ -286,6 +295,10 @@ function setHomeFilter(filter) {
     return;
   }
 
+  if (filter === "music") {
+    registerStat("abriu_aba_musica");
+  }
+
   showHomePanel(filter === "music" ? "music" : "all");
   setScreen("home");
 }
@@ -309,6 +322,10 @@ function setScreen(name) {
   });
 
   app.dataset.screen = name;
+
+  if (name === "playlist") {
+    registerStat("abriu_playlist");
+  }
 
   if (name === "player") {
     startVisualLoop();
@@ -492,6 +509,7 @@ function loadTrack(playlistKey, index) {
 
   currentPlaylistKey = playlistKey;
   currentTrackIndex = index;
+  trackStartCounted = false;
   audio.src = track.src;
   audio.playbackRate = playbackSpeed;
   progressBar.value = 0;
@@ -557,6 +575,11 @@ async function playSong() {
     syncPlayState(true);
     updateMediaSession();
     saveRecentTrack();
+
+    if (!trackStartCounted) {
+      trackStartCounted = true;
+      registerStat("tocou", currentTrack());
+    }
   } catch (error) {
     syncPlayState(false);
   }
@@ -774,6 +797,8 @@ function shareToSms() {
 }
 
 async function handleShareAction(action) {
+  registerStat("compartilhou");
+
   if (action === "copy") {
     await copyShareLink();
     return;
@@ -1060,6 +1085,9 @@ audio.addEventListener("timeupdate", () => {
 });
 
 audio.addEventListener("ended", () => {
+  registerStat("ouviu_inteira", currentTrack());
+  trackStartCounted = false;
+
   if (playbackMode === "repeat") {
     audio.currentTime = 0;
     playSong();

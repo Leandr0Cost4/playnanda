@@ -55,7 +55,10 @@
       : "Primeira vez neste celular? Toque em “Primeiro acesso”.");
   }
 
-  function unlock() {
+  function unlock(evento) {
+    if (window.spotifeEstatistica) {
+      window.spotifeEstatistica(evento);
+    }
     lockScreen.classList.add("is-unlocking");
     window.setTimeout(() => {
       lockScreen.hidden = true;
@@ -74,7 +77,7 @@
         }
       });
       markCreated();
-      unlock();
+      unlock("entrou_com_face_id");
     } catch (error) {
       setMessage(hasCreated()
         ? "Não deu certo. Toque para tentar de novo."
@@ -105,7 +108,7 @@
         }
       });
       markCreated();
-      unlock();
+      unlock("primeiro_acesso_face_id");
     } catch (error) {
       setMessage("Não foi possível criar o acesso. Confira se as Chaves do iCloud estão ativadas em Ajustes e tente de novo.");
     } finally {
