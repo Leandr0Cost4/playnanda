@@ -56,6 +56,9 @@
   }
 
   function unlock(evento) {
+    if (window.spotifeIniciarEstatistica) {
+      window.spotifeIniciarEstatistica();
+    }
     if (window.spotifeEstatistica) {
       window.spotifeEstatistica(evento);
     }

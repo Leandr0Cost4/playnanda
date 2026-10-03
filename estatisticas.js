@@ -1,4 +1,6 @@
 // Google Analytics da SpotiFê: acessos, tempo na página e músicas tocadas.
+// Só começa a contar depois que alguém entra com Face ID (bloqueio.js chama
+// spotifeIniciarEstatistica): robôs e curiosos que só abrem o link ficam de fora.
 // Abrir playnanda.com/#nao-contar uma vez deixa aquele aparelho fora das contas
 // (para os testes não somarem); playnanda.com/#contar volta a contar.
 (() => {
@@ -51,19 +53,21 @@
     window.gtag("event", nomeEvento(evento), parametros || {});
   };
 
-  if (naoContar) {
-    return;
-  }
+  window.spotifeIniciarEstatistica = () => {
+    if (naoContar || typeof window.gtag === "function") {
+      return;
+    }
 
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function gtag() {
-    window.dataLayer.push(arguments);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    window.gtag("config", MEDICAO_ID);
+
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${MEDICAO_ID}`;
+    document.head.append(script);
   };
-  window.gtag("js", new Date());
-  window.gtag("config", MEDICAO_ID);
-
-  const script = document.createElement("script");
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${MEDICAO_ID}`;
-  document.head.append(script);
 })();
